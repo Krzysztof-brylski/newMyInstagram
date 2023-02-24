@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'description',
         'follows',
         'followersCount',
         'publicAccount',
@@ -44,4 +45,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function Photo(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Photos::class,'photoable');
+    }
+
 }

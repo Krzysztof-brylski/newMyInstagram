@@ -24,6 +24,8 @@ class RegisterRequest extends FormRequest
         return [
             'name'=>'string|required',
             'publicAccount'=>'required|boolean',
+            'description'=>'nullable|string',
+            'photo'=>'nullable|file|image',
             'email'=>'string|required|unique:\App\Models\User,email',
             'password'=>'string|required|confirmed|min:8'
         ];

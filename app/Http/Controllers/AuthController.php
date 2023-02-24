@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -19,13 +20,18 @@ class AuthController extends Controller
         $user = User::create([
             'name'=>$data['name'],
             'email'=>$data['email'],
+            'description'=>$data['description'],
             'publicAccount'=>$data['publicAccount'],
             'password'=>Hash::make($data['password']),
         ]);
+        if(isset($data['photo'])){
+            $user->Photo()->create([
+                'src'=>Storage::put('Photos',$data['photo'])
+            ]);
+        }
+
         $token = $user->createToken('token-name')->plainTextToken;
-
         return Response()->json(['token'=>$token],201);
-
     }
 
     public function login(LoginRequest $request): JsonResponse{
