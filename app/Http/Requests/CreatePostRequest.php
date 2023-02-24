@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
-class RegisterRequest extends FormRequest
+class CreatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +24,13 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'string|required',
-            'publicAccount'=>'required|boolean',
-            'description'=>'nullable|string',
-            'userName'=>'string|required',
-            'photo'=>'nullable|file|image',
-            'email'=>'string|required|unique:\App\Models\User,email',
-            'password'=>'string|required|confirmed|min:8'
+            'title'=>'required|string|max:150',
+            'content'=>'required|string|max:1000',
+            'images'=>'required',
+            'tagged'=>'nullable|json',
+            'images.*'=>['file','image','mimes:jpg,bmp,png'
+                ,File::image()//->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(500))
+            ],
         ];
     }
 }

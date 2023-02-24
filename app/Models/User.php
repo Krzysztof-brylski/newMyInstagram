@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'userName',
         'email',
         'password',
         'description',
@@ -35,6 +36,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'follows',
     ];
 
     /**
@@ -50,6 +52,9 @@ class User extends Authenticatable
     public function Photo(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Photos::class,'photoable');
+    }
+    public function Posts(){
+        return $this->hasMany(Post::class,'user_id');
     }
 
 }

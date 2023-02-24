@@ -10,7 +10,9 @@ class Photos extends Model
     protected $fillable=[
         'src'
     ];
-
+    protected $visible=[
+        'src'
+    ];
     public function Photoable(){
         return $this->morphTo();
     }
