@@ -38,7 +38,7 @@ class PostController extends Controller
      */
     public function show(Post $post): PostResource
     {
-        return new PostResource($post->with(['Author','Photos'])->first());
+        return new PostResource($post->with(['Author','Photos','Comments'])->first());
     }
 
     /**
@@ -51,6 +51,20 @@ class PostController extends Controller
         (new PostService())->update($data,$post);
         return Response()->json('created',200);
     }
+
+    /**
+     * comment the specified post.
+     */
+    public function comment(Request $request, Post $post)
+    {
+        $data=$request->validate([
+            'content'=>'string|required'
+        ]);
+
+        (new PostService())->comment($data,$post);
+        return Response()->json('commented',201);
+    }
+
 
     /**
      * Remove the specified resource from storage.

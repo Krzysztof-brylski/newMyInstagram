@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -40,5 +41,15 @@ class PostService
 
         $post->edited=true;
         $post->save();
+    }
+
+    public function comment($data, Post $post)
+    {
+        $comment = new Comment();
+        $comment->content=$data['content'];
+        $comment->Author()->associate(Auth::user());
+
+        $post->Comments()->save($comment);
+
     }
 }

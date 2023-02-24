@@ -23,4 +23,8 @@ class Post extends Model
         return $this->morphMany(Photos::class,'photoable');
     }
 
+    public function Comments(){
+        return $this->morphMany(Comment::class,'commentable');
+    }
+
 }

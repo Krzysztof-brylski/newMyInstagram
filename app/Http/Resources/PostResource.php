@@ -17,7 +17,7 @@ class PostResource extends JsonResource
         return array(
             'Author'=>$this->whenLoaded('Author',new AuthorResource($this->author)),
             'Photos'=>$this->whenLoaded('Photos',$this->photos),
-            //'Comments'=>CommentsResource::collection($this->whenLoaded($this->Comments)),
+            'Comments'=>CommentResource::collection($this->comments),
 
             'title'=>$this->title,
             'content'=>$this->content,
