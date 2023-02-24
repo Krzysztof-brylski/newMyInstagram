@@ -15,6 +15,8 @@ class Post extends Model
       'tagged',
     ];
 
+    protected $withCount = ['Likes','Comments'];
+
     public function Author(){
         return $this->belongsTo(User::class,'user_id');
     }
@@ -26,5 +28,7 @@ class Post extends Model
     public function Comments(){
         return $this->morphMany(Comment::class,'commentable');
     }
-
+    public function Likes(){
+        return $this->morphMany(Likes::class,'likeable');
+    }
 }

@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\CommentResource;
+use App\Http\Resources\LikeResource;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use App\Services\LikesService;
 use App\Services\PostService;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -65,6 +69,29 @@ class PostController extends Controller
         return Response()->json('commented',201);
     }
 
+    public function like( Post $post)
+    {
+        if((new LikesService())->like($post,Auth::user())){
+            return Response()->json('liked',201);
+        }
+
+        return Response()->json('un liked',200);
+    }
+
+
+
+    public function showComments(Post $post){
+
+        return CommentResource::collection(
+            $post->Comments()->get()
+        );
+    }
+    public function showLikes(Post $post){
+
+        return LikeResource::collection(
+            $post->Comments()->get()
+        );
+    }
 
     /**
      * Remove the specified resource from storage.

@@ -16,8 +16,13 @@ class Comment extends Model
       'content'
     ];
     protected $with = ['Answers'];
+    protected $withCount = ['Likes'];
     public function Author(){
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function Likes(){
+        return $this->morphMany(Likes::class,'likeable');
     }
 
     public function Answers(){

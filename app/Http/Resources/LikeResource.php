@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Controllers\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommentResource extends JsonResource
+class LikeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +16,6 @@ class CommentResource extends JsonResource
     {
         return array(
             'author'=> new AuthorResource($this->author),
-            'content'=>$this->content,
-            'likes'=>$this->likes_count,
-            'answers'=> $this->when($this->Answers()->exists(),function (){
-                return  CommentResource::collection($this->answers);
-            }),
         );
     }
 }

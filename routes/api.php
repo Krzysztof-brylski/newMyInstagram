@@ -22,8 +22,13 @@ Route::post('/login',[AuthController::class,'login'])->name('user.login');
 
 Route::middleware('auth:sanctum')->group(function (){
 
+    Route::get('/post/comment/{post}',[PostController::class,'showComments'])->name('comment.show');
+    Route::get('/post/like/{post}',[PostController::class,'showLikes'])->name('likes.show');
+
     Route::post('/logout',[AuthController::class,'logout'])->name('user.logout');
     Route::post('/comment/answer/{comment}',[CommentController::class,'answer'])->name('comment.answer');
     Route::post('/post/comment/{post}',[PostController::class,'comment'])->name('post.comment');
+    Route::post('/post/like/{post}',[CommentController::class,'showLikes'])->name('post.like');
+    Route::post('/comment/like/{comment}',[CommentController::class,'showLikes'])->name('comment.like');
     Route::apiResource('post', PostController::class);
 });
