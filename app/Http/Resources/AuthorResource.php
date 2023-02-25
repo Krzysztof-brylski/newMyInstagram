@@ -18,7 +18,8 @@ class AuthorResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'username'=>$this->userName,
-            'followersCount'=>$this->followersCount,
+            'photo'=>$this->photo,
+            'followersCount'=>$this->follows_Count,
         );
     }
 }

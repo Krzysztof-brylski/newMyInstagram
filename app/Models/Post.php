@@ -14,7 +14,7 @@ class Post extends Model
       'edited',
       'tagged',
     ];
-
+    protected $with=['Photos'];
     protected $withCount = ['Likes','Comments'];
 
     public function Author(){

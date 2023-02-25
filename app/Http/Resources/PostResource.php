@@ -15,8 +15,8 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         return array(
-            'Author'=>$this->whenLoaded('Author',new AuthorResource($this->author)),
-            'Photos'=>$this->whenLoaded('Photos',$this->photos),
+            'author'=>$this->whenLoaded('Author',new AuthorResource($this->author)),
+            'photos'=>$this->whenLoaded('Photos',$this->photos),
             'comments_count'=>$this->comments_count,
             'likes_count'=>$this->like_count,
             'title'=>$this->title,
