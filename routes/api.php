@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->group(function (){
     //commenting
     Route::post('/comment/answer/{comment}',[CommentController::class,'answer'])->name('comment.answer');
     Route::post('/post/comment/{post}',[PostController::class,'comment'])->name('post.comment');
-    //likeing
+    //likes
     Route::post('/post/like/{post}',[CommentController::class,'like'])->name('post.like');
     Route::post('/comment/like/{comment}',[CommentController::class,'like'])->name('comment.like');
     //user
@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->group(function (){
     //user followers
     Route::get('/user/followers/{user}',[UserController::class,'followers'])->name('user.followers');
     //follow user
-    Route::post('/user/follow/{user}',[UserController::class,'follow'])->name('user.followers');
+    Route::post('/user/follow/{user}',[UserController::class,'follow'])->name('user.follow');
 
     //post resource
     Route::apiResource('post', PostController::class);

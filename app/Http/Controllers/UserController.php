@@ -23,7 +23,10 @@ class UserController extends Controller
      */
     public function show(User $user){
 
-        return new UserResource($user->with('Posts')->first());
+        return new UserResource(
+            User::where('id',$user->id)->with('Posts')->withCount(['Follows', 'Followers'])
+                ->first()
+        );
 
     }
 
@@ -36,7 +39,7 @@ class UserController extends Controller
     public function follows(User $user){
 
         return AuthorResource::collection(
-            $user->with('Follows')->get()
+            $user->Follows()->withCount('Followers')->get()
         );
     }
 
@@ -49,7 +52,7 @@ class UserController extends Controller
     public function followers(User $user){
 
         return AuthorResource::collection(
-            $user->with('Followers')->get()
+            $user->Followers()->withCount('Followers')->get()
         );
     }
 
@@ -61,6 +64,11 @@ class UserController extends Controller
      * @return JsonResponse
      */
     public function follow(User $user):JsonResponse{
+
+        if($user->id == Auth::id()){
+            return Response()->json("you cant follow yourself",200);
+        }
+
         if((new UserService())->follow($user, Auth::user() )){
             return Response()->json("followed",201);
         }

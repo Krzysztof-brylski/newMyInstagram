@@ -21,7 +21,8 @@ class UserResource extends JsonResource
                 'username'=>$this->userName,
                 'descirption'=>$this->description,
                 'photo'=>$this->photo,
-                'followersCount'=>$this->followersCount,
+                'followersCount'=>$this->followers_count,
+                'followsCount'=>$this->follows_count,
                 'posts' => PostResource::collection($this->posts)
             );
         }

@@ -34,7 +34,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'follows',
+
     ];
 
     /**
@@ -47,9 +47,8 @@ class User extends Authenticatable
     ];
 
     protected $with=[
-        'photo'
+        'Posts'
     ];
-    protected $withCount=['Follows', 'Followers'];
     public function Photo(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Photos::class,'photoable');

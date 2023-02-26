@@ -16,18 +16,15 @@ class UserService
      * @return bool
      */
     public function follow(User $followedUser,User $followingUser):bool{
-        $result = DB::table('followers')->where('user_id',$followedUser->id )
+        $result = DB::table('follows')->where('user_id',$followedUser->id )
             ->where('follower_id',$followingUser->id)->exists();
         if($result){
-            DB::table('followers')->where('user_id',$followedUser->id )
+            DB::table('follows')->where('user_id',$followedUser->id )
                 ->where('follower_id',$followingUser->id)->delete();
             return false;
         }
         $followedUser->Followers()->attach(
             $followingUser->id
-        );
-        $followingUser->Follows()->attach(
-            $followedUser->id
         );
         return true;
     }
