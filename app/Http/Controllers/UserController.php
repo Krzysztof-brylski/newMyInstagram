@@ -75,7 +75,12 @@ class UserController extends Controller
         return Response()->json("follow canceled",200);
     }
 
+    public function suggestedUser(){
 
+        return AuthorResource::collection(
+            (new UserService())->suggestedUsers(Auth::user())
+        );
+    }
 
 
 

@@ -15,10 +15,11 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         return array(
+            'id'=>$this->id,
             'author'=>$this->whenLoaded('Author',new AuthorResource($this->author)),
             'photos'=>$this->whenLoaded('Photos',$this->photos),
             'comments_count'=>$this->comments_count,
-            'likes_count'=>$this->like_count,
+            'likes_count'=>$this->likes_count,
             'title'=>$this->title,
             'content'=>$this->content,
             'edited' =>  $this->edited,

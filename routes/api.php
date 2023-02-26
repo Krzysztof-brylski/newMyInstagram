@@ -41,7 +41,10 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/user/followers/{user}',[UserController::class,'followers'])->name('user.followers');
     //follow user
     Route::post('/user/follow/{user}',[UserController::class,'follow'])->name('user.follow');
-
+    //suggested follows
+    Route::get('/user/suggested/follows/',[UserController::class,'suggestedUser'])->name('user.follow.suggestion');
+    //suggested posts
+    Route::get('/user/suggested/posts/',[PostController::class,'suggestedPost'])->name('user.post.suggestion');
     //post resource
     Route::apiResource('post', PostController::class);
 });
