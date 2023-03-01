@@ -47,8 +47,10 @@ class User extends Authenticatable
     ];
 
     protected $with=[
-        'Posts'
+        'Photo:src'
     ];
+
+
     public function Photo(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Photos::class,'photoable');
@@ -66,5 +68,10 @@ class User extends Authenticatable
     public function Followers(){
         return $this->belongsToMany(User::class,'follows','user_id','follower_id');
     }
+
+    public function Chats(){
+        return $this->belongsToMany(User::class,'chats','user_one','user_two');
+    }
+
 
 }

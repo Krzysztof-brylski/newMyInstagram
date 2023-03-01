@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register',[AuthController::class,'register'])->name('user.register');
 Route::post('/login',[AuthController::class,'login'])->name('user.login');
-
+//Route::get('/test',function (){
+//    return Response()->json(dd(\App\Models\User::find(1)->photo->src),200);
+//});
 Route::middleware('auth:sanctum')->group(function (){
     Route::post('/logout',[AuthController::class,'logout'])->name('user.logout');
 

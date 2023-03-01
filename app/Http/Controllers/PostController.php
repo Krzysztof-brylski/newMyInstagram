@@ -118,7 +118,7 @@ class PostController extends Controller
         }
         $suggestionsId = Cache::get('suggested_post');
         return PostResource::collection(
-          Post::whereIn('user_id',$suggestionsId)->paginate(10),
+          Post::whereIn('user_id',$suggestionsId)->with(['Author'])->get(),
         );
 
     }
