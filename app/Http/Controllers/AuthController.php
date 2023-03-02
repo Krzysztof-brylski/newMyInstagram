@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\AuthorResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,7 +33,10 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('token-name')->plainTextToken;
-        return Response()->json(['token'=>$token],201);
+        return Response()->json([
+            'token'=>$token,
+            'user' => new AuthorResource($user)
+        ],201);
     }
 
     public function login(LoginRequest $request): JsonResponse{
@@ -44,7 +48,10 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('token-name')->plainTextToken;
-        return Response()->json(['token'=>$token],200);
+        return Response()->json([
+            'token'=>$token,
+            'user' => new AuthorResource($user)
+        ],200);
     }
 
     public function logout(Request $request): JsonResponse{
