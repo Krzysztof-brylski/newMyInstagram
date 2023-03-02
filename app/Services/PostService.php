@@ -44,15 +44,7 @@ class PostService
         $post->save();
     }
 
-    public function comment($data, Post $post)
-    {
-        $comment = new Comment();
-        $comment->content=$data['content'];
-        $comment->Author()->associate(Auth::user());
 
-        $post->Comments()->save($comment);
-
-    }
 
     public function suggestedPosts(User $user){
         $suggestionsId=array();

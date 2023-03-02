@@ -7,6 +7,8 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\CommentResource;
 use App\Http\Resources\LikeResource;
 use App\Http\Resources\PostResource;
+use App\Models\Comment;
+use App\Models\Likes;
 use App\Models\Post;
 use App\Models\User;
 use App\Services\LikesService;
@@ -21,13 +23,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //todo make proposed posts
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -66,8 +62,7 @@ class PostController extends Controller
         $data=$request->validate([
             'content'=>'string|required'
         ]);
-
-        (new PostService())->comment($data,$post);
+        $post->comment($data['content'], Auth::user());
         return Response()->json('commented',201);
     }
 
@@ -80,18 +75,25 @@ class PostController extends Controller
         return Response()->json('un liked',200);
     }
 
-
-
     public function showComments(Post $post){
-
+        if(!Cache::has('comments')){
+            Cache::put('comments',Comment::all(),(60*60*24));
+        }
+        //dd(Cache::get('comments'));
         return CommentResource::collection(
-            $post->Comments()->get()
+            Cache::get('comments')->filter(function ($element) use ($post){
+                return $element->commentable_id == $post->id;
+            })
         );
     }
     public function showLikes(Post $post){
-
+        if(!Cache::has('likes')){
+            Cache::put('likes',Likes::all(),(60*60*24));
+        }
         return LikeResource::collection(
-            $post->Comments()->get()
+            Cache::get('likes')->filter(function ($element) use ($post){
+                return $element->likeable_id == $post->id and $element->likeable_type == 'App\Models\Post';
+            })
         );
     }
 

@@ -12,11 +12,13 @@ class LikesService
         $like = Likes::where('user_id',$user)->first();
         if($like->exist){
             $like->delete();
+            $like->fireModelEvent('liked', false);
             return true;
         }
         $like = new Likes();
         $like->Author()->associate($user);
         $resource->Likes()->save($like);
+        $like->fireModelEvent('liked', false);
         return true;
     }
 }

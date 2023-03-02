@@ -17,10 +17,24 @@ class Comment extends Model
     ];
     protected $with = ['Answers'];
     protected $withCount = ['Likes'];
+
+    protected $observables = ['answerComment'];
+
+    public function answerComment(string $content, User $user){
+        $answer = new Comment();
+        $answer->content=$content;
+        $answer->Author()->associate($user);
+
+        $this->Answers()->save($answer);
+        $this->fireModelEvent('answerComment', false);
+        return Response()->json('commented',201);
+    }
+
+
+
     public function Author(){
         return $this->belongsTo(User::class,'user_id');
     }
-
     public function Likes(){
         return $this->morphMany(Likes::class,'likeable');
     }
@@ -28,11 +42,9 @@ class Comment extends Model
     public function Answers(){
         return $this->morphMany(Comment::class,'commentable');
     }
-
     public function Commentable(){
         return $this->morphTo(Comment::class);
     }
-
 
 
 }

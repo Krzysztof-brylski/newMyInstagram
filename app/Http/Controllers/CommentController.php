@@ -18,11 +18,7 @@ class CommentController extends Controller
         $data=$request->validate([
             'content'=>'string|required'
         ]);
-        $answer = new Comment();
-        $answer->content=$data['content'];
-        $answer->Author()->associate(Auth::user());
-        $comment->Answers()->save($answer);
-
+        $comment->answerComment($data['content'], Auth::user() );
         return Response()->json('commented',201);
     }
 

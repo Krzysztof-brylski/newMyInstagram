@@ -9,6 +9,8 @@ class Likes extends Model
 {
     use HasFactory;
 
+    protected $observables = ['like'];
+
     public function Likeable(){
         return $this->morphTo();
     }
