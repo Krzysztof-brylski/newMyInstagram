@@ -65,4 +65,11 @@ class UserService
         });
         return User::whereIn('id',$suggestionsId)->withCount('Followers')->get();
     }
+
+    public function search(string $name)
+    {
+        $result = User::where('name','LIKE',"$name%")
+            ->orWhere('userName','LIKE',"$name%")->get();
+        return $result;
+    }
 }

@@ -6,7 +6,6 @@ use App\Http\Resources\AuthorResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
-use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -82,6 +81,14 @@ class UserController extends Controller
         );
     }
 
+    public function search(Request $request){
+        if(!$request->has('name')){
+            return Response()->json("bad request",400);
+        }
+        return AuthorResource::collection(
+            (new UserService())->search($request->name)
+        );
+    }
 
 
 }
