@@ -66,20 +66,19 @@ class PostController extends Controller
         return Response()->json('commented',201);
     }
 
-    public function like( Post $post)
+    public function like(Post $post)
     {
         if((new LikesService())->like($post,Auth::user())){
             return Response()->json('liked',201);
         }
 
-        return Response()->json('un liked',200);
+        return Response()->json('disliked',200);
     }
 
     public function showComments(Post $post){
         if(!Cache::has('comments')){
             Cache::put('comments',Comment::all(),(60*60*24));
         }
-        //dd(Cache::get('comments'));
         return CommentResource::collection(
             Cache::get('comments')->filter(function ($element) use ($post){
                 return $element->commentable_id == $post->id;

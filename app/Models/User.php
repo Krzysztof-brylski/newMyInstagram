@@ -50,7 +50,6 @@ class User extends Authenticatable
         'Photo:src'
     ];
 
-
     public function Photo(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Photos::class,'photoable');

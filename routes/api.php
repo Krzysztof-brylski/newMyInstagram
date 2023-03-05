@@ -33,10 +33,10 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::post('/comment/answer/{comment}',[CommentController::class,'answer'])->name('comment.answer');
     Route::post('/post/comment/{post}',[PostController::class,'comment'])->name('post.comment');
     //likes
-    Route::post('/post/like/{post}',[CommentController::class,'like'])->name('post.like');
+    Route::post('/post/like/{post}',[PostController::class,'like'])->name('post.like');
     Route::post('/comment/like/{comment}',[CommentController::class,'like'])->name('comment.like');
     //user
-    Route::get('/user/{user}',[UserController::class,'show'])->name('user.show');
+    Route::get('/user/info/{user}',[UserController::class,'show'])->name('user.show');
     //user follows
     Route::get('/user/follows/{user}',[UserController::class,'follows'])->name('user.follows');
     //user followers

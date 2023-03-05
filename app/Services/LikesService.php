@@ -9,16 +9,23 @@ class LikesService
 {
     public function like($resource, User $user): bool
     {
-        $like = Likes::where('user_id',$user)->first();
-        if($like->exist){
-            $like->delete();
-            $like->fireModelEvent('liked', false);
-            return true;
+        $like = Likes::where('user_id',$user->id)->where('likeable_id',$resource->id)
+            ->where('likeable_type',get_class($resource))->first();
+        if($like != null){
+            $like->disLike();
+            return false;
         }
+
         $like = new Likes();
-        $like->Author()->associate($user);
-        $resource->Likes()->save($like);
-        $like->fireModelEvent('liked', false);
+        $like->like($user,$resource);
         return true;
     }
+
+    public function isLiked(User $user, $resourceId,$resourceType ){
+        $like = Likes::where('user_id',$user->id)->where('likeable_id',$resourceId)
+            ->where('likeable_type',$resourceType)->first();
+        return ($like != null);
+    }
+
+
 }

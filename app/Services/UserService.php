@@ -17,6 +17,7 @@ class UserService
      * @return bool
      */
     public function follow(User $followedUser,User $followingUser):bool{
+
         $result = DB::table('follows')->where('user_id',$followedUser->id )
             ->where('follower_id',$followingUser->id)->exists();
         if($result){
@@ -67,7 +68,11 @@ class UserService
     }
 
     public function search(string $name)
-    {
+    {   
+        if($name==""){
+            return [];
+        }
+
         $result = User::where('name','LIKE',"$name%")
             ->orWhere('userName','LIKE',"$name%")->get();
         return $result;

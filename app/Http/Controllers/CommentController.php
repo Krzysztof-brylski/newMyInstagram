@@ -22,13 +22,12 @@ class CommentController extends Controller
         return Response()->json('commented',201);
     }
 
-    public function like( Post $post)
+    public function like(Comment $comment)
     {
-        if((new LikesService())->like($post,Auth::user())){
+        if((new LikesService())->like($comment,Auth::user())){
             return Response()->json('liked',201);
         }
-
-        return Response()->json('un liked',200);
+        return Response()->json('disliked',200);
     }
 
 }

@@ -23,7 +23,7 @@ class UserController extends Controller
     public function show(User $user){
 
         return new UserResource(
-            User::where('id',$user->id)->with('Posts')->withCount(['Follows', 'Followers'])
+            User::where('id',$user->id)->with('Posts')->withCount(['Follows', 'Followers','Posts'])
                 ->first()
         );
 

@@ -18,6 +18,18 @@ class Likes extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+    public function disLike(){
+
+        $this->fireModelEvent('liked', false);
+        $this->delete();
+    }
+    public function like(User $user, $resource ){
+        $this->Author()->associate($user);
+        $resource->Likes()->save($this);
+        $this->fireModelEvent('liked', false);
+        $this->save();
+    }
+
 }
 
 

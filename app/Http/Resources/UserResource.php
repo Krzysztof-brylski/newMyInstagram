@@ -19,10 +19,11 @@ class UserResource extends JsonResource
                 'id'=>$this->id,
                 'name'=>$this->name,
                 'username'=>$this->userName,
-                'descirption'=>$this->description,
+                'description'=>$this->description,
                 'photo'=>$this->photo,
                 'followersCount'=>$this->followers_count,
                 'followsCount'=>$this->follows_count,
+                'postsCount'=>$this->posts_count,
                 'posts' => PostResource::collection($this->posts)
             );
         }
